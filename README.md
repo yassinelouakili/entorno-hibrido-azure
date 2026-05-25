@@ -1,0 +1,1 @@
+# entorno-hibrido-azure
