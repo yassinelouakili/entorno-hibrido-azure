@@ -7,6 +7,8 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 - [Arquitectura](#arquitectura)
 - [Tecnologías](#tecnologías)
 - [Fases del proyecto](#fases-del-proyecto)
+- [Verificación](#verificación)
+- [Documentación detallada](#documentación-detallada)
 
 
 ---
@@ -75,7 +77,7 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 |------|-----------|
 | Virtualización | VirtualBox |
 | Servidor | Windows Server 2025 | 
-| Clientes | Windows 10/11 Enterprise | 
+| Clientes | Windows 11 Enterprise | 
 | Directorio | AD DS | 
 | DNS/DHCP | Integrado en AD | 
 | File Server | SMB + NTFS | 
@@ -92,6 +94,23 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 | Azure Policy | Gobernanza |
 | Storage | Blob + SAS |
 | Monitorización | Azure Monitor |
+
+---
+
+## Verificación
+
+### Active Directory — estructura de OUs y usuarios
+![Lista de OUs, grupos y usuarios](imgs/fase2/OU_Users_Group_List.png)
+*Active Directory Users and Computers: OUs IT, RRHH y Direccion con usuarios y grupos creados*
+
+---
+## Documentación detallada
+| Documento | Contenido |
+|------|-----------|
+| [`/docs/fase-2-active-directory.md`](/docs/fase-2-active-directory.md) | AD DS, DNS, OUs, usuarios, grupos, unión al dominio |
+
+
+
 ---
 
 Autor:
