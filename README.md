@@ -103,11 +103,25 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 ![Lista de OUs, grupos y usuarios](imgs/fase2/OU_Users_Group_List.png)
 *Active Directory Users and Computers: OUs IT, RRHH y Direccion con usuarios y grupos creados*
 
+### Group Policy Objects — GPOs vinculadas
+
+![GPMC con GPOs vinculadas a OUs](imgs/fase3/gmpc.png)
+*Group Policy Management Console: 5 GPOs corporativas vinculadas a sus OUs correspondientes*
+
+
+### GPOs aplicadas en cliente
+
+![gpresult en cliente WIN11-1](imgs/fase3/gpresult1.png)
+![gpresult en cliente WIN11-2](imgs/fase3/gpresult2.png)
+
+*Resultado de `gpresult /r` en WIN11 mostrando las GPOs aplicadas correctamente*
+
 ---
 ## Documentación detallada
 | Documento | Contenido |
 |------|-----------|
-| [`/docs/fase-2-active-directory.md`](/docs/fase-2-active-directory.md) | AD DS, DNS, OUs, usuarios, grupos, unión al dominio |
+| [`docs/fase-2-active-directory.md`](/docs/fase-2-active-directory.md) | AD DS, DNS, OUs, usuarios, grupos, unión al dominio |
+| [`docs/fase-3-gpo.md`](docs/fase-3-gpo.md) | Las 5 GPOs: configuración, vinculación y verificación |
 
 
 
