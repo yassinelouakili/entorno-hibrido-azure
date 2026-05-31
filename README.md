@@ -104,24 +104,39 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 *Active Directory Users and Computers: OUs IT, RRHH y Direccion con usuarios y grupos creados*
 
 ### Group Policy Objects — GPOs vinculadas
-
 ![GPMC con GPOs vinculadas a OUs](imgs/fase3/gmpc.png)
-*Group Policy Management Console: 5 GPOs corporativas vinculadas a sus OUs correspondientes*
-
+*Group Policy Management Console: 4 GPOs corporativas vinculadas a sus OUs correspondientes*
 
 ### GPOs aplicadas en cliente
-
 ![gpresult en cliente WIN11-1](imgs/fase3/gpresult1.png)
 ![gpresult en cliente WIN11-2](imgs/fase3/gpresult2.png)
-
 *Resultado de `gpresult /r` en WIN11 mostrando las GPOs aplicadas correctamente*
+
+### DHCP — scope activo con leases
+![DHCP scope1](imgs/fase4/scopescliente.png)
+![DHCP scope2](imgs/fase4/opciones_scope.png)
+*Scope 192.168.56.100–200 activo*
+
+### File Server — permisos NTFS configurados
+![Carpetas compartidas](imgs/fase4/file_Server.png)
+*Carpetas creadas mostradas desde punto vista de un administrador `\\DC01`*
+
+### Event Viewer — eventos de seguridad
+- 4624: inicio de sesión exitoso
+
+![Event 4624](imgs/fase4/event4624.png)
+- 4625: fallo de autenticación
+
+![Event 4625](imgs/fase4/event4625.png)
+*Event ID 4624 (login exitoso) y 4625 (fallo de autenticación) en el Security log*
 
 ---
 ## Documentación detallada
 | Documento | Contenido |
 |------|-----------|
 | [`docs/fase-2-active-directory.md`](/docs/fase-2-active-directory.md) | AD DS, DNS, OUs, usuarios, grupos, unión al dominio |
-| [`docs/fase-3-gpo.md`](docs/fase-3-gpo.md) | Las 5 GPOs: configuración, vinculación y verificación |
+| [`docs/fase-3-gpo.md`](docs/fase-3-gpo.md) | Las 4 GPOs: configuración, vinculación y verificación |
+| [`docs/fase-4-dhcp-fileserver-auditoria.md`](docs/fase-4-dhcp-fileserver-auditoria.md)| DHCP, File Server con NTFS, Event IDs de seguridad |
 
 
 
