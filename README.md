@@ -8,6 +8,7 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 - [Tecnologías](#tecnologías)
 - [Fases del proyecto](#fases-del-proyecto)
 - [Verificación](#verificación)
+- [Scripts PowerShell](#scripts-powershell)
 - [Documentación detallada](#documentación-detallada)
 
 
@@ -129,6 +130,20 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 
 ![Event 4625](imgs/fase4/event4625.png)
 *Event ID 4624 (login exitoso) y 4625 (fallo de autenticación) en el Security log*
+---
+
+## Scripts PowerShell
+
+Añadidos:
+
+| Script | Descripción |
+|--------|-------------|
+| `New-UsersFromCSV.ps1` | Creación masiva de usuarios desde CSV |
+| `Get-InactiveUsers.ps1` | Usuarios sin login en los últimos 30 días |
+| `Backup-GPOs.ps1` | Exporta todas las GPOs con fecha |
+| `Get-DomainInventory.ps1` | Inventario de equipos: nombre, IP, SO, última conexión |
+| `Test-CriticalServices.ps1` | Verifica que AD DS, DNS y DHCP están activos |
+
 
 ---
 ## Documentación detallada
@@ -137,6 +152,7 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 | [`docs/fase-2-active-directory.md`](/docs/fase-2-active-directory.md) | AD DS, DNS, OUs, usuarios, grupos, unión al dominio |
 | [`docs/fase-3-gpo.md`](docs/fase-3-gpo.md) | Las 4 GPOs: configuración, vinculación y verificación |
 | [`docs/fase-4-dhcp-fileserver-auditoria.md`](docs/fase-4-dhcp-fileserver-auditoria.md)| DHCP, File Server con NTFS, Event IDs de seguridad |
+| [`docs/fase-5-powershell.md`](docs/fase-5-powershell.md) | Scripts: descripción, uso y ejemplos de output |
 
 
 
