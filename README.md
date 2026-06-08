@@ -130,6 +130,10 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 
 ![Event 4625](imgs/fase4/event4625.png)
 *Event ID 4624 (login exitoso) y 4625 (fallo de autenticación) en el Security log*
+
+![Usuarios sincronizados en Entra ID](imgs/fase6/sincronización%20de%20usuarios.png)
+*Usuarios del dominio labyee.local sincronizados en Azure Entra ID mediante Entra Connect*
+
 ---
 
 ## Scripts PowerShell
@@ -153,6 +157,7 @@ Añadidos:
 | [`docs/fase-3-gpo.md`](docs/fase-3-gpo.md) | Las 4 GPOs: configuración, vinculación y verificación |
 | [`docs/fase-4-dhcp-fileserver-auditoria.md`](docs/fase-4-dhcp-fileserver-auditoria.md)| DHCP, File Server con NTFS, Event IDs de seguridad |
 | [`docs/fase-5-powershell.md`](docs/fase-5-powershell.md) | Scripts: descripción, uso y ejemplos de output |
+| [`docs/fase-6-entra-connect.md`](docs/fase-6-entra-connect.md) | Entra Connect, Hybrid Cloud |
 
 
 
