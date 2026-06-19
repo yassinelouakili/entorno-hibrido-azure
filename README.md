@@ -1,20 +1,11 @@
-# Entorno Corporativo hibrido: Active Directory + Azure Entra ID
+Infraestructura Híbrida de Identidad y Seguridad (Active Directory + Azure Entra ID)
 
-Laboratorio profesional que simula la infraestructura híbrida de identidades de una empresa mediana: Active Directory on‑premise con Windows Server 2025, sincronizado con Azure Entra ID mediante Entra Connect, con políticas de seguridad Zero Trust, MFA, Conditional Access, Identity Protection, PIM, Access Reviews y administración cloud con RBAC, Azure Policy, Storage y Monitor.
-
----
-## Índice
-- [Arquitectura](#arquitectura)
-- [Tecnologías](#tecnologías)
-- [Fases del proyecto](#fases-del-proyecto)
-- [Verificación](#verificación)
-- [Scripts PowerShell](#scripts-powershell)
-- [Documentación detallada](#documentación-detallada)
-
+## Resumen 
+Diseño e implementación de una infraestructura de identidad híbrida para una empresa mediana, simulando un entorno **Zero Trust**. El objetivo principal es la centralización de identidades, la sincronización segura con la nube y la implementación de controles de acceso modernos para mitigar riesgos.
 
 ---
-## Arquitectura
 
+## Arquitectura de la Solución
 ```
 ┌─────────────────────────────────────────────┐
 │                                             │
@@ -48,120 +39,52 @@ Laboratorio profesional que simula la infraestructura híbrida de identidades de
 │  · Azure Monitor + Alertas                  │
 └─────────────────────────────────────────────┘
 ```
+---
 
-**Red interna:** `192.168.56.0/24`  
-**Dominio:** `labyee.local`  
-**DC01:** `192.168.56.10`  
-**Clientes DHCP:** `192.168.56.100–200`
+## Decisiones de Diseño
+Para este proyecto, he priorizado estándares de la industria sobre configuraciones por defecto:
+
+* **Principio de Menor Privilegio:** En lugar de usar cuentas de Administrador de Dominio para la sincronización, configuré una **cuenta de servicio dedicada (`svc_EntraConnect`)** con permisos específicos de replicación. Esto minimiza la superficie de ataque del entorno on-premise.
+* **Identidad Híbrida:** Implementación de *Password Hash Sync* con *Seamless SSO* para ofrecer una experiencia de usuario fluida sin comprometer la integridad de las contraseñas, equilibrando seguridad y usabilidad.
+* **Seguridad Moderna:** Diseño enfocado en capas: desde el hardening del servidor local (GPOs) hasta políticas de acceso condicional y MFA en Azure.
 
 ---
 
-## Fases del proyecto
+## Fases del Proyecto (Milestones)
 
-| Fase | Descripción | Área |
-|------|-------------|------|
-| 1 | Preparación del entorno (VirtualBox + ISOs + Azure) | Setup |
-| 2 | AD DS, DNS, OUs, usuarios, grupos | On‑premise |
-| 3 | GPOs corporativas (5) | On‑premise |
-| 4 | DHCP, File Server, auditoría | On‑premise |
-| 5 | Scripts PowerShell | Automatización |
-| 6 | Entra Connect + PHS + Seamless SSO | Híbrido |
-| 7 | MFA + Conditional Access (Zero Trust) | Seguridad |
-| 8 | Identity Protection + PIM + Access Reviews | Governance |
-| 9 | Azure: RBAC, Policy, Storage, Monitor | Cloud |
-| 10 | Hardening: bloqueo de legacy auth, roles admin separados | Seguridad |
-
----
-## Tecnologías
-
-| Capa | Tecnología |
-|------|-----------|
-| Virtualización | VirtualBox |
-| Servidor | Windows Server 2025 | 
-| Clientes | Windows 11 Enterprise | 
-| Directorio | AD DS | 
-| DNS/DHCP | Integrado en AD | 
-| File Server | SMB + NTFS | 
-| Políticas | GPO | 
-| Automatización | PowerShell | 
-| Sincronización | Entra Connect + Connect Health |
-| Identidad cloud | Entra ID |
-| MFA | Entra MFA |
-| Conditional Access | Zero Trust |
-| Identity Protection | Riesgo de usuario/sesión |
-| PIM | Roles Just‑In‑Time |
-| Governance | Access Reviews |
-| RBAC | Azure IAM |
-| Azure Policy | Gobernanza |
-| Storage | Blob + SAS |
-| Monitorización | Azure Monitor |
+| Fase | Área | Objetivo |
+| :--- | :--- | :--- |
+| **1-4** | On-Premise | Base: AD DS, DNS/DHCP, File Server y GPOs de endurecimiento. |
+| **5** | Automatización | Scripts PowerShell para inventario y gestión de usuarios masiva. |
+| **6** | Híbrido | Despliegue de Entra Connect y sincronización de identidades. |
+| **7** | Seguridad | MFA y Directivas de Acceso Condicional (Zero Trust). |
+| **8-9** | Governance | PIM, Access Reviews y Gobernanza cloud con RBAC/Azure Policy. |
+| **10** | Hardening | Bloqueo de autenticación legacy y separación de roles administrativos. |
 
 ---
 
-## Verificación
-
-### Active Directory — estructura de OUs y usuarios
-![Lista de OUs, grupos y usuarios](imgs/fase2/OU_Users_Group_List.png)
-*Active Directory Users and Computers: OUs IT, RRHH y Direccion con usuarios y grupos creados*
-
-### Group Policy Objects — GPOs vinculadas
-![GPMC con GPOs vinculadas a OUs](imgs/fase3/gmpc.png)
-*Group Policy Management Console: 4 GPOs corporativas vinculadas a sus OUs correspondientes*
-
-### GPOs aplicadas en cliente
-![gpresult en cliente WIN11-1](imgs/fase3/gpresult1.png)
-![gpresult en cliente WIN11-2](imgs/fase3/gpresult2.png)
-*Resultado de `gpresult /r` en WIN11 mostrando las GPOs aplicadas correctamente*
-
-### DHCP — scope activo con leases
-![DHCP scope1](imgs/fase4/scopescliente.png)
-![DHCP scope2](imgs/fase4/opciones_scope.png)
-*Scope 192.168.56.100–200 activo*
-
-### File Server — permisos NTFS configurados
-![Carpetas compartidas](imgs/fase4/file_Server.png)
-*Carpetas creadas mostradas desde punto vista de un administrador `\\DC01`*
-
-### Event Viewer — eventos de seguridad
-- 4624: inicio de sesión exitoso
-
-![Event 4624](imgs/fase4/event4624.png)
-- 4625: fallo de autenticación
-
-![Event 4625](imgs/fase4/event4625.png)
-*Event ID 4624 (login exitoso) y 4625 (fallo de autenticación) en el Security log*
-
-![Usuarios sincronizados en Entra ID](imgs/fase6/sincronización%20de%20usuarios.png)
-*Usuarios del dominio labyee.local sincronizados en Azure Entra ID mediante Entra Connect*
+## Stack Tecnológico
+* **Core:** Windows Server 2025, Active Directory DS.
+* **Cloud:** Microsoft Entra ID (P2), Azure Monitor, Storage.
+* **Seguridad:** Conditional Access, MFA, Identity Protection.
+* **Automatización:** PowerShell (gestión de lifecycle de identidades).
 
 ---
 
-## Scripts PowerShell
+##  Desafíos y Aprendizajes (Key Takeaways)
 
-Añadidos:
-
-| Script | Descripción |
-|--------|-------------|
-| `New-UsersFromCSV.ps1` | Creación masiva de usuarios desde CSV |
-| `Get-InactiveUsers.ps1` | Usuarios sin login en los últimos 30 días |
-| `Backup-GPOs.ps1` | Exporta todas las GPOs con fecha |
-| `Get-DomainInventory.ps1` | Inventario de equipos: nombre, IP, SO, última conexión |
-| `Test-CriticalServices.ps1` | Verifica que AD DS, DNS y DHCP están activos |
-
-
----
-## Documentación detallada
-| Documento | Contenido |
-|------|-----------|
-| [`docs/fase-2-active-directory.md`](/docs/fase-2-active-directory.md) | AD DS, DNS, OUs, usuarios, grupos, unión al dominio |
-| [`docs/fase-3-gpo.md`](docs/fase-3-gpo.md) | Las 4 GPOs: configuración, vinculación y verificación |
-| [`docs/fase-4-dhcp-fileserver-auditoria.md`](docs/fase-4-dhcp-fileserver-auditoria.md)| DHCP, File Server con NTFS, Event IDs de seguridad |
-| [`docs/fase-5-powershell.md`](docs/fase-5-powershell.md) | Scripts: descripción, uso y ejemplos de output |
-| [`docs/fase-6-entra-connect.md`](docs/fase-6-entra-connect.md) | Entra Connect, Hybrid Cloud |
-
-
+* **Sincronización:** Durante la primera iteración, enfrenté errores de sincronización por configuración de permisos de la cuenta de servicio. Esto me obligó a profundizar en la delegación de permisos de AD y entender el funcionamiento del agente de Entra Connect, lo cual fue clave para fortalecer la seguridad de la arquitectura.
+* **Resolución de Problemas:** El trabajo con GPOs y DNS me enseñó que la infraestructura IT es un ecosistema interconectado; un error de resolución de nombres puede invalidar capas enteras de seguridad.
 
 ---
 
-Autor:
-**Yassine Elouakili El Mahdati**
+## Documentación Detallada
+Para ver el detalle técnico de cada fase, consulta la carpeta `/docs`:
+- [Fase 2: AD DS & DNS](docs/fase-2-active-directory.md)
+- [Fase 3: GPOs y Seguridad](docs/fase-3-gpo.md)
+- [Fase 4: Infraestructura y Auditoría](docs/fase-4-dhcp-fileserver-auditoria.md)
+- [Fase 5: Automatización PowerShell](docs/fase-5-powershell.md)
+- [Fase 6: Sincronización Híbrida](docs/fase-6-entra-connect.md)
+
+---
+*Autor: Yassine Elouakili El Mahdati*
