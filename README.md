@@ -1,4 +1,4 @@
-Infraestructura Híbrida de Identidad y Seguridad (Active Directory + Azure Entra ID)
+# Infraestructura Híbrida de Identidad y Seguridad (Active Directory + Azure Entra ID)
 
 ## Resumen 
 Diseño e implementación de una infraestructura de identidad híbrida para una empresa mediana, simulando un entorno **Zero Trust**. El objetivo principal es la centralización de identidades, la sincronización segura con la nube y la implementación de controles de acceso modernos para mitigar riesgos.
